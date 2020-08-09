@@ -2,6 +2,7 @@ package wechat
 
 import (
 	"crypto/sha1"
+	"encoding/hex"
 	"sort"
 	"strings"
 )
@@ -25,5 +26,7 @@ func (wc *Wechat) CheckSignature(signature string, timestamp string, nonce strin
 	hash := sha1.New()
 	hash.Write([]byte(strings.Join(array, "")))
 
-	return string(hash.Sum([]byte{})) == signature
+	hashCode := hex.EncodeToString(hash.Sum([]byte{}))
+
+	return hashCode == signature
 }
